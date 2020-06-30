@@ -12,7 +12,6 @@ import uk.parser.ParserUK;
 import uk.parser.ResultUK;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bot extends TelegramLongPollingBot {
@@ -262,6 +261,6 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "1237517329:AAHOKBf9a3XulgmsR2pBF-GHmnuv_4hkgCA";
+        return "TOKEN";
     }
 }
