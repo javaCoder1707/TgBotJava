@@ -17,10 +17,10 @@ public class ParserRU {
         System.out.println("Parsing...");
         Document document = Jsoup.connect("https://yandex.ru/news").get();
 
-        Elements storyTitle = document.getElementsByClass("story__title");
+        Elements divs = document.getElementsByClass("story__title");
 
-        storyTitle.forEach(page -> {
-            Element a = page.child(0);
+        divs.forEach(div -> {
+            Element a = div.child(0);
             String url = a.attr("href");
             String text = a.text();
 
@@ -37,10 +37,10 @@ public class ParserRU {
         System.out.println("Parsing...");
         Document document = Jsoup.connect("https://yandex.ru/news/rubric/politics?from=index").get();
 
-        Elements storyTitle = document.getElementsByClass("story__title");
+        Elements divs = document.getElementsByClass("story__title");
 
-        storyTitle.forEach(page -> {
-            Element a = page.child(0);
+        divs.forEach(div -> {
+            Element a = div.child(0);
             String url = a.attr("href");
             String text = a.text();
 
@@ -58,10 +58,10 @@ public class ParserRU {
         System.out.println("Parsing...");
         Document document = Jsoup.connect("https://yandex.ru/news/rubric/computers?from=rubric").get();
 
-        Elements storyTitle = document.getElementsByClass("story__title");
+        Elements divs = document.getElementsByClass("story__title");
 
-        storyTitle.forEach(page -> {
-            Element a = page.child(0);
+        divs.forEach(div -> {
+            Element a = div.child(0);
             String url = a.attr("href");
             String text = a.text();
 
@@ -79,10 +79,10 @@ public class ParserRU {
         System.out.println("Parsing...");
         Document document = Jsoup.connect("https://yandex.ru/news/rubric/auto?from=rubric").get();
 
-        Elements storyTitle = document.getElementsByClass("story__title");
+        Elements divs = document.getElementsByClass("story__title");
 
-        storyTitle.forEach(page -> {
-            Element a = page.child(0);
+        divs.forEach(div -> {
+            Element a = div.child(0);
             String url = a.attr("href");
             String text = a.text();
 
@@ -100,17 +100,16 @@ public class ParserRU {
         System.out.println("Parsing...");
         Document document = Jsoup.connect("https://yandex.ru/sport").get();
 
-        Elements cardTitle = document.getElementsByClass("card__title");
+        Elements divs = document.getElementsByClass("card__title");
 
-        cardTitle.forEach(page -> {
-            Element a = page.child(0);
+        divs.forEach(div -> {
+            Element a = div.child(0);
             String url = a.attr("href");
             String text = a.text();
 
             if(text == null) results.add(new ResultRU(url, "Спорт"));
             else results.add(new ResultRU(url, text));
         });
-
 
         return results;
     }
@@ -121,14 +120,14 @@ public class ParserRU {
         System.out.println("Parsing...");
         Document document = Jsoup.connect("https://yandex.ru/news/rubric/culture?from=rubric").get();
 
-        Elements storyTitle = document.getElementsByClass("story__title");
+        Elements divs = document.getElementsByClass("story__title");
 
-        storyTitle.forEach(page -> {
-            Element a = page.child(0);
+        divs.forEach(div -> {
+            Element a = div.child(0);
             String url = a.attr("href");
             String text = a.text();
 
-            if(text == null) results.add(new ResultRU(url, "Искусство "));
+            if(text == null) results.add(new ResultRU(url, "Искусство"));
             else results.add(new ResultRU(url, text));
         });
 
@@ -136,3 +135,4 @@ public class ParserRU {
         return results;
     }
 }
+
