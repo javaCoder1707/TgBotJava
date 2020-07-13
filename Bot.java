@@ -13,6 +13,7 @@ import ru.parser.ResultRU;
 import uk.parser.ParserUK;
 import uk.parser.ResultUK;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +53,7 @@ public class Bot extends TelegramLongPollingBot {
             case "Привет":
             case "привет":
                 sendMsg(message,
-                        "Привет\uD83D\uDD90 чтобы узнать новости на разные темы введите команду /newsAllR" +
+                        "Привет\uD83D\uDD90 чтобы узнать все новости на данный момент введите команду /newsAllR" +
                                 "\n" + "\n" +
                                 "Чтобы узнать новости на тему политики \n \uD83C\uDFDB введите команду /policyR\n" +
                                 "\n" +
@@ -68,16 +69,19 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/newsAllR":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
                     ParserRU.allNewsResults().forEach(x -> sendMsg(message, x.toString()));
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    
+                    System.out.println("ALL_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    writer.write("ALL_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
 
             case "/policyR":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
                     List<ResultRU> results = ParserRU.policyNewsResults();
 
                     for (int i = 0; i < 5 ; i++) {
@@ -85,7 +89,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("POLICY_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("POLICY_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
@@ -93,7 +99,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/mobileR":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
                     List<ResultRU> results = ParserRU.mobileNewsResults();
 
                     for (int i = 0; i < 5; i++) {
@@ -101,7 +107,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("MOBILE_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("MOBILE_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch(IOException | InterruptedException e){
                     e.printStackTrace();
@@ -109,7 +117,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/carR":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
                     List<ResultRU> results = ParserRU.carsNewsResults();
 
                     for (int i = 0; i < 5; i++) {
@@ -117,7 +125,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("CAR_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("CAR_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch(IOException | InterruptedException e){
                     e.printStackTrace();
@@ -125,7 +135,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/sportR":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
                     List<ResultRU> results = ParserRU.sportNewsResults();
 
                     for (int i = 0; i < 5; i++) {
@@ -133,7 +143,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("SPORT_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("SPORT_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch(IOException | InterruptedException e){
                     e.printStackTrace();
@@ -141,7 +153,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/artR":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
                     List<ResultRU> results = ParserRU.artNewsResults();
 
                     for (int i = 0; i < 5; i++) {
@@ -149,7 +161,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("ART_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("ART_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch(IOException | InterruptedException e){
                     e.printStackTrace();
@@ -162,6 +176,12 @@ public class Bot extends TelegramLongPollingBot {
                         "Если вы нашли неполадки или хотите расширить функциональность программы пишите на почту javacoder1707@gmail.com");
 
                 System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
+                    writer.write("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
 
 
@@ -189,16 +209,19 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/newsAll":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
                     ParserUK.allNewsResults().forEach(x -> sendMsg(message, x.toString()));
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    System.out.println("ALL_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    writer.write("ALL_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
 
             case "/newsUK":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
                     List<ResultUK> results = ParserUK.newsOfUKResults();
 
                     for(int i = 0; i < 5; i++){
@@ -206,7 +229,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("NEWS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("NEWS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch (IOException | InterruptedException e){
                     e.printStackTrace();
@@ -214,7 +239,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/newsWorld":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
                     List<ResultUK> results = ParserUK.worldNewsResults();
 
                     for(int i = 0; i < 5; i++){
@@ -222,7 +247,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("WORLD_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("WORLD_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
@@ -230,7 +257,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/politic":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
                     List<ResultUK> results = ParserUK.politicNewsResults();
 
                     for(int i = 0; i < 5; i++){
@@ -238,7 +265,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("POLITIC_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("POLITIC_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
@@ -246,7 +275,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/motors":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
                     List<ResultUK> results = ParserUK.motorsNewsResults();
 
                     for(int i = 0; i < 5; i++){
@@ -254,7 +283,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("MOTORS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("MOTORS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
@@ -262,7 +293,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/sport":
-                try {
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
                     List<ResultUK> results = ParserUK.sportNewsResults();
 
                     for(int i = 0; i < 5; i++){
@@ -270,7 +301,9 @@ public class Bot extends TelegramLongPollingBot {
                         Thread.sleep(1000);
                     }
 
-                    System.out.println("Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+                    System.out.println("SPORT_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                    writer.write("SPORT_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
@@ -284,6 +317,12 @@ public class Bot extends TelegramLongPollingBot {
                                 "If you find a problem or want to expand the functionality of the program, write to javacoder1707@gmail.com");
 
                 System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
+                  writer.write("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
 
             default:
@@ -291,7 +330,6 @@ public class Bot extends TelegramLongPollingBot {
                 sendMsg(message, "Enter /start");
                 break;
         }
-        message.getNewChatMembers().forEach(x -> System.out.println(x.getFirstName() + " " + x.getLastName()));
     }
 
     @Override
