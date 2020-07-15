@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import ru.parser.ParserRU;
@@ -15,10 +16,11 @@ import uk.parser.ResultUK;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Bot extends TelegramLongPollingBot {
+    Set<User> users = new HashSet<>();
+
     public static void main(String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
@@ -40,6 +42,234 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
+    //Russian
+    private void allNewsRu(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            ParserRU.allNewsResults().forEach(x -> sendMsg(message, x.toString()));
+
+            System.out.println("ALL_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+            writer.write("ALL_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void policyNewsRu(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultRU> results = ParserRU.policyNewsResults();
+
+            for (int i = 0; i < 5 ; i++) {
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("POLICY_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("POLICY_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void mobileNewsRu(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultRU> results = ParserRU.mobileNewsResults();
+
+            for (int i = 0; i < 5; i++) {
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("MOBILE_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("MOBILE_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void carNewsRu(Message message) {
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultRU> results = ParserRU.carsNewsResults();
+
+            for (int i = 0; i < 5; i++) {
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("CAR_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("CAR_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void sportNewsRu(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultRU> results = ParserRU.sportNewsResults();
+
+            for (int i = 0; i < 5; i++) {
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("SPORT_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("SPORT_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void artNewsRu(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultRU> results = ParserRU.artNewsResults();
+
+            for (int i = 0; i < 5; i++) {
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("ART_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("ART_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void helpRu(Message message){
+        System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
+            writer.write("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+//English
+    private void allNewsUK(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            ParserUK.allNewsResults().forEach(x -> sendMsg(message, x.toString()));
+
+            System.out.println("ALL_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+            writer.write("ALL_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void newsOfUK(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultUK> results = ParserUK.newsOfUKResults();
+
+            for(int i = 0; i < 5; i++){
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("NEWS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("NEWS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch (IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void newsOfWorldUK(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultUK> results = ParserUK.worldNewsResults();
+
+            for(int i = 0; i < 5; i++){
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("WORLD_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("WORLD_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void politicNewsUK(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultUK> results = ParserUK.politicNewsResults();
+
+            for(int i = 0; i < 5; i++){
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("POLITIC_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("POLITIC_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void motorsNewsUK(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultUK> results = ParserUK.motorsNewsResults();
+
+            for(int i = 0; i < 5; i++){
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("MOTORS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("MOTORS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sportNewsUK(Message message){
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+            List<ResultUK> results = ParserUK.sportNewsResults();
+
+            for(int i = 0; i < 5; i++){
+                sendMsg(message, results.get(i).toString());
+                Thread.sleep(1000);
+            }
+
+            System.out.println("SPORT_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+            writer.write("SPORT_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void helpUK(Message message){
+        System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+
+        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
+            writer.write("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
@@ -49,6 +279,7 @@ public class Bot extends TelegramLongPollingBot {
                 sendMsg(message, "Chose a language \n /Russian or /English");
                 break;
 
+           //Russian
             case "/Russian":
             case "Привет":
             case "привет":
@@ -69,124 +300,39 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/newsAllR":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
-                    ParserRU.allNewsResults().forEach(x -> sendMsg(message, x.toString()));
-                    
-                    System.out.println("ALL_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-                    writer.write("ALL_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
+                 allNewsRu(message);
+                 break;
 
             case "/policyR":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
-                    List<ResultRU> results = ParserRU.policyNewsResults();
-
-                    for (int i = 0; i < 5 ; i++) {
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("POLICY_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("POLICY_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-                break;
+                 policyNewsRu(message);
+                 break;
 
             case "/mobileR":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
-                    List<ResultRU> results = ParserRU.mobileNewsResults();
-
-                    for (int i = 0; i < 5; i++) {
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("MOBILE_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("MOBILE_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch(IOException | InterruptedException e){
-                    e.printStackTrace();
-                }
+                mobileNewsRu(message);
                 break;
 
             case "/carR":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
-                    List<ResultRU> results = ParserRU.carsNewsResults();
-
-                    for (int i = 0; i < 5; i++) {
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("CAR_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("CAR_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch(IOException | InterruptedException e){
-                    e.printStackTrace();
-                }
+               carNewsRu(message);
                 break;
 
             case "/sportR":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-                    List<ResultRU> results = ParserRU.sportNewsResults();
-
-                    for (int i = 0; i < 5; i++) {
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("SPORT_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("SPORT_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch(IOException | InterruptedException e){
-                    e.printStackTrace();
-                }
+                sportNewsRu(message);
                 break;
 
             case "/artR":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-                    List<ResultRU> results = ParserRU.artNewsResults();
-
-                    for (int i = 0; i < 5; i++) {
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("ART_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("ART_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch(IOException | InterruptedException e){
-                    e.printStackTrace();
-                }
+               artNewsRu(message);
                 break;
 
             case "/helpR":
                 sendMsg(message,  "Приносим извинение за неполадки, программа находиться в стадии разработки " +
                         "\n" + "\n" +
                         "Если вы нашли неполадки или хотите расширить функциональность программы пишите на почту javacoder1707@gmail.com");
-
-                System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
-                    writer.write("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                helpRu(message);
                 break;
 
 
 
-
+            //English
             case "/English":
             case "hi":
             case "Hello":
@@ -209,105 +355,27 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/newsAll":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-                    ParserUK.allNewsResults().forEach(x -> sendMsg(message, x.toString()));
-
-                    System.out.println("ALL_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-                    writer.write("ALL_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+               allNewsUK(message);
                 break;
 
             case "/newsUK":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
-                    List<ResultUK> results = ParserUK.newsOfUKResults();
-
-                    for(int i = 0; i < 5; i++){
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("NEWS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("NEWS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch (IOException | InterruptedException e){
-                    e.printStackTrace();
-                }
+               newsOfUK(message);
                 break;
 
             case "/newsWorld":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-                    List<ResultUK> results = ParserUK.worldNewsResults();
-
-                    for(int i = 0; i < 5; i++){
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("WORLD_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("WORLD_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+              newsOfWorldUK(message);
                 break;
 
             case "/politic":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-                    List<ResultUK> results = ParserUK.politicNewsResults();
-
-                    for(int i = 0; i < 5; i++){
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("POLITIC_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("POLITIC_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+               politicNewsUK(message);
                 break;
 
             case "/motors":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true);) {
-                    List<ResultUK> results = ParserUK.motorsNewsResults();
-
-                    for(int i = 0; i < 5; i++){
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("MOTORS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("MOTORS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+               motorsNewsUK(message);
                 break;
 
             case "/sport":
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-                    List<ResultUK> results = ParserUK.sportNewsResults();
-
-                    for(int i = 0; i < 5; i++){
-                        sendMsg(message, results.get(i).toString());
-                        Thread.sleep(1000);
-                    }
-
-                    System.out.println("SPORT_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                    writer.write("SPORT_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+                sportNewsUK(message);
                 break;
 
             case "/help":
@@ -315,20 +383,24 @@ public class Bot extends TelegramLongPollingBot {
                         "We apologize for the problems, the program is under development" +
                                 "\n" + "\n" +
                                 "If you find a problem or want to expand the functionality of the program, write to javacoder1707@gmail.com");
-
-                System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
-                try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
-                  writer.write("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                helpUK(message);
                 break;
 
             default:
                 sendMsg(message, "This command does not exist!!!");
                 sendMsg(message, "Enter /start");
                 break;
+        }
+
+        users.add(message.getFrom());
+
+        if(Calendar.HOUR == 11){
+            try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
+                writer.write("\n At " + new Date() + " " + users.size() + " people used the JavaNewsUKBot!!! \n \n");
+                users.clear();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
