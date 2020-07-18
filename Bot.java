@@ -32,11 +32,11 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void sendMsg(Message message, String text){
-        SendMessage s = new SendMessage();
-        s.setChatId(message.getChatId());
-        s.setText(text);
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(message.getChatId());
+        sendMessage.setText(text);
         try {
-            execute(s);
+            execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -393,16 +393,16 @@ public class Bot extends TelegramLongPollingBot {
         }
 
         users.add(message.getFrom());
-
-        if(Calendar.HOUR == 11){
-            try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
-                writer.write("\n At " + new Date() + " " + users.size() + " people used the JavaNewsUKBot!!! \n \n");
-                users.clear();
+        
+        if(hour.format(new Date()).equals("00")){
+            try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
+              writer.write("\n" + users.size() + " people used JavaNewsUKBot at " + new Date() + " \n \n");
+              users.clear();
             } catch (IOException e) {
-                e.printStackTrace();
+               e.printStackTrace();
             }
-        }
-    }
+       }
+   }
 
     @Override
     public String getBotUsername() {
