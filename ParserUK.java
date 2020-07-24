@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ParserUK {
-    public static List<ResultUK> allNewsResults() throws IOException {
+    public static List<ResultUK> receiveAllNewsResults() throws IOException {
         List<ResultUK> resultUKS = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -33,7 +33,7 @@ public class ParserUK {
         return resultUKS;
     }
 
-    public static List<ResultUK> newsOfUKResults() throws IOException {
+    public static List<ResultUK> receiveResultsNewsOfUK() throws IOException {
         List<ResultUK> resultUKS = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -57,7 +57,7 @@ public class ParserUK {
         return resultUKS;
     }
 
-    public static List<ResultUK> worldNewsResults() throws IOException{
+    public static List<ResultUK> receiveWorldNewsResults() throws IOException{
         List<ResultUK> resultUKS = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -80,7 +80,7 @@ public class ParserUK {
         return resultUKS;
     }
 
-    public static List<ResultUK> politicNewsResults() throws IOException {
+    public static List<ResultUK> receivePoliticNewsResults() throws IOException {
         List<ResultUK> resultUKS = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -103,7 +103,7 @@ public class ParserUK {
         return resultUKS;
     }
 
-    public static List<ResultUK> motorsNewsResults() throws IOException {
+    public static List<ResultUK> receiveMotorsNewsResults() throws IOException {
         List<ResultUK> resultUKS = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -126,7 +126,7 @@ public class ParserUK {
         return resultUKS;
     }
 
-    public static List<ResultUK> sportNewsResults() throws IOException {
+    public static List<ResultUK> receiveSportNewsResults() throws IOException {
         List<ResultUK> resultUKS = new ArrayList<>();
 
         System.out.println("Parsing...");
