@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ParserRU {
 
-    public static List<ResultRU> allNewsResults() throws IOException {
+    public static List<ResultRU> receiveAllNewsResults() throws IOException {
         List<ResultRU> results = new ArrayList<>();
         System.out.println("Parsing...");
         Document document = Jsoup.connect("https://yandex.ru/news").get();
@@ -31,7 +31,7 @@ public class ParserRU {
         return results;
     }
 
-    public static List<ResultRU> policyNewsResults() throws IOException {
+    public static List<ResultRU> receivePolicyNewsResults() throws IOException {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -52,7 +52,7 @@ public class ParserRU {
         return results;
     }
 
-    public static List<ResultRU> mobileNewsResults() throws IOException {
+    public static List<ResultRU> receiveMobileNewsResults() throws IOException {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -73,7 +73,7 @@ public class ParserRU {
         return results;
     }
 
-    public static List<ResultRU> carsNewsResults() throws IOException {
+    public static List<ResultRU> receiveCarsNewsResults() throws IOException {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -94,7 +94,7 @@ public class ParserRU {
         return results;
     }
 
-    public static List<ResultRU> sportNewsResults() throws IOException {
+    public static List<ResultRU> receiveSportNewsResults() throws IOException {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -114,7 +114,7 @@ public class ParserRU {
         return results;
     }
 
-    public static List<ResultRU> artNewsResults() throws IOException {
+    public static List<ResultRU> receiveArtNewsResults() throws IOException {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -135,4 +135,5 @@ public class ParserRU {
         return results;
     }
 }
+
 
