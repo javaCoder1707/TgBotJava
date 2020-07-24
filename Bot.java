@@ -394,14 +394,14 @@ public class Bot extends TelegramLongPollingBot {
 
         users.add(message.getFrom());
         
-        if(hour.format(new Date()).equals("00")){
+        if(hour.format(new Date()).equals("23")){
             try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-              writer.write("\n" + users.size() + " people used JavaNewsUKBot at " + new Date() + " \n \n");
-              users.clear();
+                writer.write("\n" + users.size() + " people used JavaNewsUKBot at " + format.format(new Date()) + " \n \n");
+                users.clear();
             } catch (IOException e) {
-               e.printStackTrace();
+                e.printStackTrace();
             }
-       }
+        }
    }
 
     @Override
