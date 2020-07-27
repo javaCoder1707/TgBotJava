@@ -102,7 +102,7 @@ public class ParserRU {
 
         aLinks.forEach(aLink -> {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.sports.ru/news" : aLink.attr("href");
-            String text = aLink.text();
+            String text = (TextUtils.isEmpty(aLink.text())) ? "Спорт" : aLink.text();
 
             results.add(new ResultRU(url, text, "Sport"));
         });
