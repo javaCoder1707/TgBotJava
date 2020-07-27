@@ -1,6 +1,7 @@
 package ru.parser;
 
 
+import org.apache.http.util.TextUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,18 +15,18 @@ public class ParserRU {
 
     public static List<ResultRU> receiveAllNewsResults() throws IOException {
         List<ResultRU> results = new ArrayList<>();
+
         System.out.println("Parsing...");
         Document document = Jsoup.connect("https://yandex.ru/news").get();
 
         Elements divs = document.getElementsByClass("story__title");
 
         divs.forEach(div -> {
-            Element a = div.child(0);
-            String url = a.attr("href");
-            String text = a.text();
+            Element aLink = div.child(0);
+            String url = (TextUtils.isEmpty(aLink.attr("href")) ? "https://yandex.ru/news" : aLink.attr("href"));
+            String text = (TextUtils.isEmpty(aLink.text())) ? "Новости" : aLink.text();
 
-            if(text == null) results.add(new ResultRU(url, "Новости"));
-            else results.add(new ResultRU(url, text));
+            results.add(new ResultRU(url, text, "News"));
         });
 
         return results;
@@ -40,12 +41,11 @@ public class ParserRU {
         Elements divs = document.getElementsByClass("story__title");
 
         divs.forEach(div -> {
-            Element a = div.child(0);
-            String url = a.attr("href");
-            String text = a.text();
+            Element aLink = div.child(0);
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/politics?from=index" : aLink.attr("href");
+            String text = (TextUtils.isEmpty(aLink.text())) ? "Политика" : aLink.text();
 
-            if(text == null) results.add(new ResultRU(url, "Политика"));
-            else results.add(new ResultRU(url, text));
+            results.add(new ResultRU(url, text, "Policy"));
         });
 
 
@@ -61,12 +61,11 @@ public class ParserRU {
         Elements divs = document.getElementsByClass("story__title");
 
         divs.forEach(div -> {
-            Element a = div.child(0);
-            String url = a.attr("href");
-            String text = a.text();
+            Element aLink = div.child(0);
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/computers?from=rubric" : aLink.attr("href");
+            String text = (TextUtils.isEmpty(aLink.text())) ? "Электроника" : aLink.text();
 
-            if(text == null) results.add(new ResultRU(url, "Электроника"));
-            else results.add(new ResultRU(url, text));
+            results.add(new ResultRU(url, text, "Mobile"));
         });
 
 
@@ -82,12 +81,11 @@ public class ParserRU {
         Elements divs = document.getElementsByClass("story__title");
 
         divs.forEach(div -> {
-            Element a = div.child(0);
-            String url = a.attr("href");
-            String text = a.text();
+            Element aLink = div.child(0);
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/auto?from=rubric" : aLink.attr("href");
+            String text = (TextUtils.isEmpty(aLink.text())) ? "Авто" : aLink.text();
 
-            if(text == null) results.add(new ResultRU(url, "Автомобили"));
-            else results.add(new ResultRU(url, text));
+            results.add(new ResultRU(url, text, "Cars"));
         });
 
 
@@ -98,17 +96,15 @@ public class ParserRU {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
-        Document document = Jsoup.connect("https://yandex.ru/sport").get();
+        Document document = Jsoup.connect("https://www.sports.ru/news").get();
 
-        Elements divs = document.getElementsByClass("card__title");
+        Elements aLinks = document.getElementsByClass("short-text");
 
-        divs.forEach(div -> {
-            Element a = div.child(0);
-            String url = a.attr("href");
-            String text = a.text();
+        aLinks.forEach(aLink -> {
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.sports.ru/news" : aLink.attr("href");
+            String text = aLink.text();
 
-            if(text == null) results.add(new ResultRU(url, "Спорт"));
-            else results.add(new ResultRU(url, text));
+            results.add(new ResultRU(url, text, "Sport"));
         });
 
         return results;
@@ -123,17 +119,14 @@ public class ParserRU {
         Elements divs = document.getElementsByClass("story__title");
 
         divs.forEach(div -> {
-            Element a = div.child(0);
-            String url = a.attr("href");
-            String text = a.text();
+            Element aLink = div.child(0);
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/culture?from=rubric" : aLink.attr("href");
+            String text = (TextUtils.isEmpty(aLink.text())) ? "Искусство" : aLink.text();
 
-            if(text == null) results.add(new ResultRU(url, "Искусство"));
-            else results.add(new ResultRU(url, text));
+            results.add(new ResultRU(url, text, "Art"));
         });
 
 
         return results;
     }
 }
-
-
