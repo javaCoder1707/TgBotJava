@@ -23,6 +23,7 @@ public class ParserRU {
 
         divs.forEach(div -> {
             Element aLink = div.child(0);
+
             String url = (TextUtils.isEmpty(aLink.attr("href")) ? "https://yandex.ru/news" : aLink.attr("href"));
             String text = (TextUtils.isEmpty(aLink.text())) ? "Новости" : aLink.text();
 
@@ -42,6 +43,7 @@ public class ParserRU {
 
         divs.forEach(div -> {
             Element aLink = div.child(0);
+
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/politics?from=index" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Политика" : aLink.text();
 
@@ -62,6 +64,7 @@ public class ParserRU {
 
         divs.forEach(div -> {
             Element aLink = div.child(0);
+
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/computers?from=rubric" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Электроника" : aLink.text();
 
@@ -78,12 +81,13 @@ public class ParserRU {
         System.out.println("Parsing...");
         Document document = Jsoup.connect("https://yandex.ru/news/rubric/auto?from=rubric").get();
 
-        Elements divs = document.getElementsByClass("story__title");
+        Elements headers = document.getElementsByClass("story__title");
+        
+        headers.forEach(header -> {
+            Element aLink = header.child(0);
 
-        divs.forEach(div -> {
-            Element aLink = div.child(0);
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/auto?from=rubric" : aLink.attr("href");
-            String text = (TextUtils.isEmpty(aLink.text())) ? "Авто" : aLink.text();
+            String text = (TextUtils.isEmpty(header.text())) ? "Авто" : header.text();
 
             results.add(new ResultRU(url, text, "Cars"));
         });
@@ -120,6 +124,7 @@ public class ParserRU {
 
         divs.forEach(div -> {
             Element aLink = div.child(0);
+
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/culture?from=rubric" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Искусство" : aLink.text();
 
