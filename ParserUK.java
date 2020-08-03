@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParserUK {
+    
     public static List<ResultUK> receiveAllNewsResults() throws IOException {
         List<ResultUK> results = new ArrayList<>();
 
