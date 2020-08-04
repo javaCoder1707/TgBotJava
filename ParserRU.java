@@ -107,9 +107,17 @@ public class ParserRU {
 
     public static List<ResultRU> receiveArtNewsResults() throws IOException {
         List<ResultRU> results = new ArrayList<>();
+        results.addAll(receiveFilmsNewsResults());
+        results.addAll(receiveMusicNewsResults());
+        
+        return results;
+    }
+
+    private static List<ResultRU> receiveFilmsNewsResults() throws IOException {
+        List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
-        Document document = Jsoup.connect("https://ria.ru/category_kino/").get(); //films
+        Document document = Jsoup.connect("https://ria.ru/category_kino/").get();
 
         Elements divs = document.getElementsByClass("list-item__content");
 
@@ -122,13 +130,18 @@ public class ParserRU {
             results.add(new ResultRU(url, text, "Art"));
         });
 
+        return results;
+    }
+
+    private static List<ResultRU> receiveMusicNewsResults() throws IOException {
+        List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
-        Document document1 = Jsoup.connect("https://ria.ru/category_muzyka/").get(); //music
+        Document document = Jsoup.connect("https://ria.ru/category_muzyka/").get();
 
-        Elements divs1 = document1.getElementsByClass("list-item__content");
+        Elements divs = document.getElementsByClass("list-item__content");
 
-        divs1.forEach(div -> {
+        divs.forEach(div -> {
             Element aLink = div.child(1);
 
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/category_muzyka/" : aLink.attr("href");
