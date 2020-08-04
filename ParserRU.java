@@ -9,27 +9,20 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ParserRU {
 
-    public static List<ResultRU> receiveAllNewsResults() throws IOException {
+    public static List<ResultRU> receiveAllNewsResults() throws IOException{
         List<ResultRU> results = new ArrayList<>();
+        results.addAll(receivePolicyNewsResults());
+        results.addAll(receiveMobileNewsResults());
+        results.addAll(receiveCarsNewsResults());
+        results.addAll(receiveSportNewsResults().subList(0, 25));
+        results.addAll(receiveArtNewsResults());
 
-        System.out.println("Parsing...");
-        Document document = Jsoup.connect("https://yandex.ru/news").get();
-
-        Elements headers = document.getElementsByClass("story__title");
-
-        headers.forEach(header -> {
-            Element aLink = header.child(0);
-
-            String url = (TextUtils.isEmpty(aLink.attr("href")) ? "https://yandex.ru/news" : aLink.attr("href"));
-            String text = (TextUtils.isEmpty(header.text())) ? "Новости" : header.text();
-
-            results.add(new ResultRU(url, text, "News"));
-        });
-
+        Collections.shuffle(results);
 
         return results;
     }
@@ -38,19 +31,18 @@ public class ParserRU {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
-        Document document = Jsoup.connect("https://yandex.ru/news/rubric/politics?from=index").get();
+        Document document = Jsoup.connect("https://ria.ru/politics/").get();
 
-        Elements headers = document.getElementsByClass("story__title");
+        Elements divs = document.getElementsByClass("list-item__content");
 
-        headers.forEach(header -> {
-            Element aLink = header.child(0);
+        divs.forEach(div -> {
+            Element aLink = div.child(1);
 
-            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/politics?from=index" : aLink.attr("href");
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/politics/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Политика" : aLink.text();
 
             results.add(new ResultRU(url, text, "Policy"));
         });
-
 
         return results;
     }
@@ -59,19 +51,18 @@ public class ParserRU {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
-        Document document = Jsoup.connect("https://yandex.ru/news/rubric/computers?from=rubric").get();
+        Document document = Jsoup.connect("https://ria.ru/technology/").get();
 
-        Elements headers = document.getElementsByClass("story__title");
+        Elements divs = document.getElementsByClass("list-item__content");
 
-        headers.forEach(header -> {
-            Element aLink = header.child(0);
+        divs.forEach(div -> {
+            Element aLink = div.child(1);
 
-            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/computers?from=rubric" : aLink.attr("href");
-            String text = (TextUtils.isEmpty(aLink.text())) ? "Электроника" : aLink.text();
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/technology/" : aLink.attr("href");
+            String text = (TextUtils.isEmpty(aLink.text())) ? "Технологии" : aLink.text();
 
             results.add(new ResultRU(url, text, "Mobile"));
         });
-
 
         return results;
     }
@@ -80,19 +71,18 @@ public class ParserRU {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
-        Document document = Jsoup.connect("https://yandex.ru/news/rubric/auto?from=rubric").get();
+        Document document = Jsoup.connect("https://ria.ru/auto/").get();
 
-        Elements headers = document.getElementsByClass("story__title");
+        Elements divs = document.getElementsByClass("list-item__content");
 
-        headers.forEach(header -> {
-            Element aLink = header.child(0);
+        divs.forEach(div -> {
+            Element aLink = div.child(1);
 
-            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/auto?from=rubric" : aLink.attr("href");
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/auto/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Авто" : aLink.text();
 
             results.add(new ResultRU(url, text, "Cars"));
         });
-
 
         return results;
     }
@@ -112,7 +102,6 @@ public class ParserRU {
             results.add(new ResultRU(url, text, "Sport"));
         });
 
-
         return results;
     }
 
@@ -120,19 +109,33 @@ public class ParserRU {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
-        Document document = Jsoup.connect("https://yandex.ru/news/rubric/culture?from=rubric").get();
+        Document document = Jsoup.connect("https://ria.ru/category_kino/").get(); //films
 
-        Elements headers = document.getElementsByClass("story__title");
+        Elements divs = document.getElementsByClass("list-item__content");
 
-        headers.forEach(header -> {
-            Element aLink = header.child(0);
+        divs.forEach(div -> {
+            Element aLink = div.child(1);
 
-            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://yandex.ru/news/rubric/culture?from=rubric" : aLink.attr("href");
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/category_kino/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Искусство" : aLink.text();
 
             results.add(new ResultRU(url, text, "Art"));
         });
 
+
+        System.out.println("Parsing...");
+        Document document1 = Jsoup.connect("https://ria.ru/category_muzyka/").get(); //music
+
+        Elements divs1 = document1.getElementsByClass("list-item__content");
+
+        divs1.forEach(div -> {
+            Element aLink = div.child(1);
+
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/category_muzyka/" : aLink.attr("href");
+            String text = (TextUtils.isEmpty(aLink.text())) ? "Искусство" : aLink.text();
+
+            results.add(new ResultRU(url, text, "Art"));
+        });
 
         return results;
     }
