@@ -20,20 +20,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Bot extends TelegramLongPollingBot {
- private Set<User> users = new HashSet<>();
- private DateFormat hour = new SimpleDateFormat("HH");
- private DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+public class Bot extends TelegramLongPollingBot { 
+    
+    private Set<User> users = new HashSet<>();
+    private DateFormat hour = new SimpleDateFormat("HH");
+    private DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-  //Russian
-   private List<ResultRU> allNewsResultsRU = ParserRU.receiveAllNewsResults();
-   private List<ResultRU> policyNewsResultsRU = ParserRU.receivePolicyNewsResults();
-   private List<ResultRU> mobileNewsResultsRU = ParserRU.receiveMobileNewsResults();
-   private List<ResultRU> carsNewsResultsRU = ParserRU.receiveCarsNewsResults();
-   private List<ResultRU> sportNewsResultsRU = ParserRU.receiveSportNewsResults();
-   private List<ResultRU> artNewsResultsRU = ParserRU.receiveArtNewsResults();
+    //Russian news variables
+    private List<ResultRU> allNewsResultsRU = ParserRU.receiveAllNewsResults();
+    private List<ResultRU> policyNewsResultsRU = ParserRU.receivePolicyNewsResults();
+    private List<ResultRU> mobileNewsResultsRU = ParserRU.receiveMobileNewsResults();
+    private List<ResultRU> carsNewsResultsRU = ParserRU.receiveCarsNewsResults();
+    private List<ResultRU> sportNewsResultsRU = ParserRU.receiveSportNewsResults();
+    private List<ResultRU> artNewsResultsRU = ParserRU.receiveArtNewsResults();
 
-   //English
+    //English news variables
     private List<ResultUK> allNewsResultsUK = ParserUK.receiveAllNewsResults();
     private List<ResultUK> resultsNewsOfUK = ParserUK.receiveResultsNewsOfUK();
     private List<ResultUK> worldNewsResultsUK = ParserUK.receiveWorldNewsResults();
@@ -53,22 +54,24 @@ public class Bot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-
-    private void sendMsg(Message message, String text){
+    
+    private void sendMessage(Message message, String text){
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId());
         sendMessage.setText(text);
         try {
             execute(sendMessage);
-        } catch (TelegramApiException e) {
+            Thread.sleep(1000);
+        } catch (TelegramApiException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    //Russian
+    //Russian news sending methods
     private void sendAllNewsRU(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-            allNewsResultsRU.forEach(allNewsResult -> sendMsg(message, allNewsResult.toString()));
+            allNewsResultsRU.forEach(allNewsResult -> sendMessage(message, allNewsResult.toString()));
+            allNewsResultsRU = ParserRU.receiveAllNewsResults();
 
             System.out.println("ALL_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
             writer.write("ALL_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
@@ -81,24 +84,23 @@ public class Bot extends TelegramLongPollingBot {
     private void sendPolicyNewsRU(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
 
-            if(policyNewsResultsRU.size() == 4){
-                policyNewsResultsRU.forEach(policyNewsResult -> sendMsg(message, policyNewsResult.toString()));
+            if(policyNewsResultsRU.size() == 5){
+                policyNewsResultsRU.forEach(policyNewsResult -> sendMessage(message, policyNewsResult.toString()));
                 policyNewsResultsRU = ParserRU.receivePolicyNewsResults();
 
                 return;
             }
 
-            for (int i = 0; i <= 4; i++) {
-                sendMsg(message, policyNewsResultsRU.get(i).toString());
+            for (int i = 0; i < 5; i++) {
+                sendMessage(message, policyNewsResultsRU.get(i).toString());
                 policyNewsResultsRU.remove(policyNewsResultsRU.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("POLICY_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("POLICY_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -106,24 +108,23 @@ public class Bot extends TelegramLongPollingBot {
     private void sendMobileNewsRU(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
 
-            if(mobileNewsResultsRU.size() == 4){
-                mobileNewsResultsRU.forEach(mobileNewsResult -> sendMsg(message, mobileNewsResult.toString()));
+            if(mobileNewsResultsRU.size() == 5){
+                mobileNewsResultsRU.forEach(mobileNewsResult -> sendMessage(message, mobileNewsResult.toString()) );
                 mobileNewsResultsRU = ParserRU.receiveMobileNewsResults();
 
                 return;
             }
 
-            for (int i = 0; i <= 4; i++) {
-                sendMsg(message, mobileNewsResultsRU.get(i).toString());
+            for (int i = 0; i < 5; i++) {
+                sendMessage(message, mobileNewsResultsRU.get(i).toString());
                 mobileNewsResultsRU.remove(mobileNewsResultsRU.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("MOBILE_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("MOBILE_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch(IOException | InterruptedException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
@@ -131,24 +132,23 @@ public class Bot extends TelegramLongPollingBot {
     private void sendCarsNewsRU(Message message) {
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
 
-            if(carsNewsResultsRU.size() == 4){
-                carsNewsResultsRU.forEach(carsNewsResult -> sendMsg(message, carsNewsResult.toString()));
-                carsNewsResultsRU = ParserRU.receiveCarsNewsResults(); 
+            if(carsNewsResultsRU.size() == 5){
+                carsNewsResultsRU.forEach(carsNewsResult -> sendMessage(message, carsNewsResult.toString()));
+                carsNewsResultsRU = ParserRU.receiveCarsNewsResults();
 
                 return;
             }
 
-            for (int i = 0; i <= 4; i++) {
-                sendMsg(message, carsNewsResultsRU.get(i).toString());
+            for (int i = 0; i < 5; i++) {
+                sendMessage(message, carsNewsResultsRU.get(i).toString());
                 carsNewsResultsRU.remove(carsNewsResultsRU.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("CAR_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("CAR_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch(IOException | InterruptedException e){
+        } catch(IOException  e){
             e.printStackTrace();
         }
     }
@@ -156,24 +156,23 @@ public class Bot extends TelegramLongPollingBot {
     private void sendSportNewsRU(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
 
-            if(sportNewsResultsRU.size() == 4){
-                sportNewsResultsRU.forEach(sportNewsResult -> sendMsg(message, sportNewsResult.toString()));
+            if(sportNewsResultsRU.size() == 5){
+                sportNewsResultsRU.forEach(sportNewsResult -> sendMessage(message, sportNewsResult.toString()));
                 sportNewsResultsRU = ParserRU.receiveSportNewsResults();
 
                 return;
             }
 
-            for (int i = 0; i <= 4; i++) {
-                sendMsg(message, sportNewsResultsRU.get(i).toString());
+            for (int i = 0; i < 5; i++) {
+                sendMessage(message, sportNewsResultsRU.get(i).toString());
                 sportNewsResultsRU.remove(sportNewsResultsRU.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("SPORT_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("SPORT_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch(IOException | InterruptedException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
@@ -181,33 +180,36 @@ public class Bot extends TelegramLongPollingBot {
     private void sendArtNewsRU(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
 
-            if(artNewsResultsRU.size() == 4){
-                artNewsResultsRU.forEach(artNewsResult -> sendMsg(message, artNewsResult.toString()));
+            Collections.shuffle(artNewsResultsRU);
+
+            if(artNewsResultsRU.size() == 5){
+                artNewsResultsRU.forEach(artNewsResult -> sendMessage(message, artNewsResult.toString()));
                 artNewsResultsRU = ParserRU.receiveArtNewsResults();
-                                        
+
                 return;
             }
 
-            for (int i = 0; i <= 4; i++) {
-                sendMsg(message, artNewsResultsRU.get(i).toString());
+            for (int i = 0; i < 5; i++) {
+                sendMessage(message, artNewsResultsRU.get(i).toString());
                 artNewsResultsRU.remove(artNewsResultsRU.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("ART_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("ART_RU: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch(IOException | InterruptedException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
 
     private void helpRU(Message message){
-        System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
+            
+            System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+            
             writer.write("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+        
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -216,10 +218,11 @@ public class Bot extends TelegramLongPollingBot {
 
 
 
-    //English
+    //English news sending  methods 
     private void sendAllNewsUK(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-           allNewsResultsUK.forEach(allNewsResult -> sendMsg(message, allNewsResult.toString()));
+           allNewsResultsUK.forEach(allNewsResult -> sendMessage(message, allNewsResult.toString()));
+           allNewsResultsUK = ParserUK.receiveAllNewsResults();
 
             System.out.println("ALL_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
             writer.write("ALL_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
@@ -231,20 +234,24 @@ public class Bot extends TelegramLongPollingBot {
 
     private void sendNewsOfUK(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-           
-            if(resultsNewsOfUK.size() == 0) resultsNewsOfUK = ParserUK.receiveResultsNewsOfUK();
-               
+
+            if(resultsNewsOfUK.size() == 4){
+                resultsNewsOfUK.forEach(resultNewsOfUK -> sendMessage(message, resultNewsOfUK.toString()));
+                resultsNewsOfUK = ParserUK.receiveResultsNewsOfUK();
+
+                return;
+            }
+
             for(int i = 0; i < 4; i++){
-                sendMsg(message, resultsNewsOfUK.get(i).toString());
+                sendMessage(message, resultsNewsOfUK.get(i).toString());
                 resultsNewsOfUK.remove(resultsNewsOfUK.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("NEWS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("NEWS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch (IOException | InterruptedException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -252,19 +259,23 @@ public class Bot extends TelegramLongPollingBot {
     private void sendWorldNewsUK(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
 
-            if(worldNewsResultsUK.size() == 0) worldNewsResultsUK = ParserUK.receiveWorldNewsResults();
+            if(worldNewsResultsUK.size() == 4){
+                worldNewsResultsUK.forEach(worldNewsResult -> sendMessage(message, worldNewsResult.toString()));
+                worldNewsResultsUK = ParserUK.receiveWorldNewsResults();
+
+                return;
+            }
 
             for(int i = 0; i < 4; i++){
-                sendMsg(message, worldNewsResultsUK.get(i).toString());
+                sendMessage(message, worldNewsResultsUK.get(i).toString());
                 worldNewsResultsUK.remove(worldNewsResultsUK.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("WORLD_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("WORLD_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -272,19 +283,23 @@ public class Bot extends TelegramLongPollingBot {
     private void sendPoliticNewsUK(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
 
-            if(politicNewsResultsUK.size() == 0) politicNewsResultsUK = ParserUK.receivePoliticNewsResults();
+            if(politicNewsResultsUK.size() == 4){
+                politicNewsResultsUK.forEach(politicNewsResult -> sendMessage(message, politicNewsResult.toString()));
+                politicNewsResultsUK = ParserUK.receivePoliticNewsResults();
+
+                return;
+            }
 
             for(int i = 0; i < 4; i++){
-                sendMsg(message, politicNewsResultsUK.get(i).toString());
+                sendMessage(message, politicNewsResultsUK.get(i).toString());
                 politicNewsResultsUK.remove(politicNewsResultsUK.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("POLITIC_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("POLITIC_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -292,19 +307,23 @@ public class Bot extends TelegramLongPollingBot {
     private void sendMotorsNewsUK(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
 
-            if(motorsNewsResultsUK.size() == 0) motorsNewsResultsUK = ParserUK.receiveMotorsNewsResults();
+            if(motorsNewsResultsUK.size() == 4){
+                motorsNewsResultsUK.forEach(motorsNewsResult -> sendMessage(message, motorsNewsResult.toString()));
+                motorsNewsResultsUK = ParserUK.receiveMotorsNewsResults();
+
+                return;
+            }
 
             for(int i = 0; i < 4; i++){
-                sendMsg(message, motorsNewsResultsUK.get(i).toString());
+                sendMessage(message, motorsNewsResultsUK.get(i).toString());
                 motorsNewsResultsUK.remove(motorsNewsResultsUK.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("MOTORS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("MOTORS_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -312,28 +331,34 @@ public class Bot extends TelegramLongPollingBot {
     private void sendSportNewsUK(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
 
-            if(sportNewsResultsUK.size() == 0) sportNewsResultsUK = ParserUK.receiveSportNewsResults();
+            if(sportNewsResultsUK.size() == 4){
+                sportNewsResultsUK.forEach(sportNewsResult -> sendMessage(message, sportNewsResult.toString()));
+                sportNewsResultsUK = ParserUK.receiveSportNewsResults();
+
+                return;
+            }
 
             for(int i = 0; i < 4; i++){
-                sendMsg(message,  sportNewsResultsUK.get(i).toString());
+                sendMessage(message,  sportNewsResultsUK.get(i).toString());
                 sportNewsResultsUK.remove(sportNewsResultsUK.get(i));
-                Thread.sleep(1000);
             }
 
             System.out.println("SPORT_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
 
             writer.write("SPORT_UK: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void helpUK(Message message){
-        System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
+            
+            System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
+            
             writer.write("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
+        
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -343,29 +368,23 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
         String txt = message.getText();
-        sendMsg(message,"Attention! \n" +
-        "Technical work in progress, please try again in 30 minutes." +
-                "\n" + "\n" +
-                "Внимание! \n" +
-                "Ведутся технические работы, повторите попытку через 30 минут.");
-
         switch (txt) {
             case "/start":
-                sendMsg(message, "Chose a language \n /Russian or /English");
+                sendMessage(message, "Choose language \n /Russian (Привет) or /English (Hi, Hello)");
                 break;
 
-           //Russian
+            //Russian commands
             case "/Russian":
             case "Привет":
             case "привет":
-                sendMsg(message,
+                sendMessage(message,
                         "Привет\uD83D\uDC4B  чтобы узнать все новости на данный момент введите команду /newsAllR" +
                                 "\n" + "\n" +
                                 "Чтобы узнать новости на тему политики \n \uD83C\uDFDB введите команду /policyR\n" +
                                 "\n" +
-                                "Чтобы узнать новости на тему электроники \n \uD83D\uDCF1 введите команду /mobileR\n" +
+                                "Чтобы узнать новости на тему технологий \n \uD83D\uDCF1 введите команду /mobileR\n" +
                                 "\n" +
-                                "Чтобы узнать новости на тему авто\n \uD83D\uDE98 введите команду /carR\n" +
+                                "Чтобы узнать новости на тему авто \n \uD83D\uDE98 введите команду /autoR\n" +
                                 "\n" +
                                 "Чтобы узнать новости на тему спорта \n ⚽️ введите команду /sportR\n" +
                                 "\n" +
@@ -386,7 +405,7 @@ public class Bot extends TelegramLongPollingBot {
                 sendMobileNewsRU(message);
                 break;
 
-            case "/carR":
+            case "/autoR":
                 sendCarsNewsRU(message);
                 break;
 
@@ -399,7 +418,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/helpR":
-                sendMsg(message,  "Приносим извинение за неполадки, программа находиться в стадии разработки " +
+                sendMessage(message,  "Приносим извинение за неполадки, программа находиться в стадии разработки " +
                         "\n" + "\n" +
                         "Если вы нашли неполадки или хотите расширить функциональность программы пишите на почту javacoder1707@gmail.com");
                 helpRU(message);
@@ -407,13 +426,13 @@ public class Bot extends TelegramLongPollingBot {
 
 
 
-            //English
+            //English commands
             case "/English":
             case "hi":
             case "Hello":
             case "Hi":
             case "hello":
-                sendMsg(message,
+                sendMessage(message,
                         "Hi\uD83D\uDC4B to get the all news, enter the command \n /newsAll" +
                                 "\n" + "\n" +
                                 "To get news on the topic of UK \uD83C\uDDEC\uD83C\uDDE7 enter the command /newsUK \n" +
@@ -454,7 +473,7 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             case "/help":
-                sendMsg(message,
+                sendMessage(message,
                         "We apologize for the problems, the program is under development" +
                                 "\n" + "\n" +
                                 "If you find a problem or want to expand the functionality of the program, write to javacoder1707@gmail.com");
@@ -462,8 +481,8 @@ public class Bot extends TelegramLongPollingBot {
                 break;
 
             default:
-                sendMsg(message, "This command does not exist!!!");
-                sendMsg(message, "Enter /start");
+                sendMessage(message, "This command does not exist!!!\n Нет такой команды!!!");
+                sendMessage(message, "Enter /start  \n Введите /start");
                 break;
         }
         users.add(message.getFrom());
@@ -485,6 +504,6 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "1237517329:AAHOKBf9a3XulgmsR2pBF-GHmnuv_4hkgCA";
+        return "TOKEN";
     }
 }
