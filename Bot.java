@@ -22,9 +22,9 @@ import java.util.*;
 
 public class Bot extends TelegramLongPollingBot { 
     
-    private Set<User> users = new HashSet<>();
-    private DateFormat hour = new SimpleDateFormat("HH");
-    private DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    private final Set<User> users = new HashSet<>();
+    private final DateFormat hour = new SimpleDateFormat("HH");
+    private final DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
     //Russian news variables
     private List<ResultRU> allNewsResultsRU = ParserRU.receiveAllNewsResults();
@@ -203,17 +203,7 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    private void helpRU(Message message){
-        try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
-            
-            System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
-            
-            writer.write("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date() + "\n");
-        
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+ 
 
 
 
@@ -351,8 +341,9 @@ public class Bot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-
-    private void helpUK(Message message){
+    
+    //help message sending method
+    private void help(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
             
             System.out.println("HELP: Sent successfully to " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " at " + new Date());
@@ -370,11 +361,11 @@ public class Bot extends TelegramLongPollingBot {
         String txt = message.getText();
         switch (txt) {
             case "/start":
-                sendMessage(message, "Choose language \n /Russian (Привет) or /English (Hi, Hello)");
+                sendMessage(message, "Choose language \n /russian (Привет) or /english (Hi, Hello)");
                 break;
 
             //Russian commands
-            case "/Russian":
+            case "/russian":
             case "Привет":
             case "привет":
                 sendMessage(message,
@@ -421,13 +412,13 @@ public class Bot extends TelegramLongPollingBot {
                 sendMessage(message,  "Приносим извинение за неполадки, программа находиться в стадии разработки " +
                         "\n" + "\n" +
                         "Если вы нашли неполадки или хотите расширить функциональность программы пишите на почту javacoder1707@gmail.com");
-                helpRU(message);
+                help(message);
                 break;
 
 
 
             //English commands
-            case "/English":
+            case "/english":
             case "hi":
             case "Hello":
             case "Hi":
@@ -477,7 +468,7 @@ public class Bot extends TelegramLongPollingBot {
                         "We apologize for the problems, the program is under development" +
                                 "\n" + "\n" +
                                 "If you find a problem or want to expand the functionality of the program, write to javacoder1707@gmail.com");
-                helpUK(message);
+                help(message);
                 break;
 
             default:
