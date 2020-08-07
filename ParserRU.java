@@ -110,6 +110,8 @@ public class ParserRU {
         results.addAll(receiveFilmsNewsResults());
         results.addAll(receiveMusicNewsResults());
         
+        Collections.shuffle(results);
+        
         return results;
     }
 
