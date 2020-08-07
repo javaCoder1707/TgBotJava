@@ -22,9 +22,9 @@ import java.util.*;
 
 public class Bot extends TelegramLongPollingBot { 
     
-    private final Set<User> users = new HashSet<>();
-    private final DateFormat hour = new SimpleDateFormat("HH");
-    private final DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    private final Set<User> USERS = new HashSet<>();
+    private final DateFormat HOUR = new SimpleDateFormat("HH");
+    private final DateFormat FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
     //Russian news variables
     private List<ResultRU> allNewsResultsRU = ParserRU.receiveAllNewsResults();
@@ -179,8 +179,6 @@ public class Bot extends TelegramLongPollingBot {
 
     private void sendArtNewsRU(Message message){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-
-            Collections.shuffle(artNewsResultsRU);
 
             if(artNewsResultsRU.size() == 5){
                 artNewsResultsRU.forEach(artNewsResult -> sendMessage(message, artNewsResult.toString()));
@@ -476,12 +474,12 @@ public class Bot extends TelegramLongPollingBot {
                 sendMessage(message, "Enter /start  \n Введите /start");
                 break;
         }
-        users.add(message.getFrom());
+        USERS.add(message.getFrom());
 
-        if(hour.format(new Date()).equals("23")){
+        if(HOUR.format(new Date()).equals("23")){
             try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)) {
-                writer.write("\n" + users.size() + " people used JavaNewsUKBot at " + format.format(new Date()) + " \n \n");
-                users.clear();
+                writer.write("\n" + USERS.size() + " people used JavaNewsUKBot at " + FORMAT.format(new Date()) + " \n \n");
+                USERS.clear();
             } catch (IOException e) {
                 e.printStackTrace();
             }
