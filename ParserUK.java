@@ -1,4 +1,4 @@
-package uk.parser;
+package com.parser.uk;
 
 import org.apache.http.util.TextUtils;
 import org.jsoup.Jsoup;
@@ -11,7 +11,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParserUK {
-    
+
+    public static List<ResultUK> receiveNewsResultsByType(String type) throws IOException {
+        List<ResultUK> results = new ArrayList<>();
+        switch (type){
+            case "NEWS_UK":
+                results = receiveResultsNewsOfUK();
+                break;
+
+            case "WORLD_UK":
+                results = receiveWorldNewsResults();
+                break;
+
+            case "POLITIC_UK":
+                results = receivePoliticNewsResults();
+                break;
+
+            case "MOTORS_UK":
+                results = receiveMotorsNewsResults();
+                break;
+
+            case "SPORT_UK":
+                results = receiveSportNewsResults();
+                break;
+
+            default:
+                System.err.println("Invalid news type at ParserUK.receiveNewsResultsByType() call ");
+        }
+
+        return results;
+    }
+
     public static List<ResultUK> receiveAllNewsResults() throws IOException {
         List<ResultUK> results = new ArrayList<>();
 
@@ -27,7 +57,8 @@ public class ParserUK {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.thesun.co.uk/news/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(header.text())) ? "News" : header.text();
 
-            results.add(new ResultUK(url, text));
+            results.add(new ResultUK(url, text, "ALL_UK"));
+
         });
 
         return results;
@@ -47,7 +78,7 @@ public class ParserUK {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.thesun.co.uk/news/uknews/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(header.text())) ? "News of UK" : header.text();
 
-            results.add(new ResultUK(url, text));
+            results.add(new ResultUK(url, text, "POLITIC_UK"));
         });
 
 
@@ -68,7 +99,7 @@ public class ParserUK {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.thesun.co.uk/news/worldnews/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(header.text())) ? "World News" : header.text();
 
-            results.add(new ResultUK(url, text));
+            results.add(new ResultUK(url, text, "WORLD_UK"));
         });
 
         return results;
@@ -88,7 +119,7 @@ public class ParserUK {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.thesun.co.uk/news/politics/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(header.text())) ? "Politic News" : header.text();
 
-            results.add(new ResultUK(url, text));
+            results.add(new ResultUK(url, text,"NEWS_UK"));
         });
 
         return results;
@@ -108,7 +139,7 @@ public class ParserUK {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.thesun.co.uk/motors/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(header.text())) ? "Motors" : header.text();
 
-            results.add(new ResultUK(url, text));
+            results.add(new ResultUK(url, text,"MOTORS_UK"));
         });
 
         return results;
@@ -129,7 +160,7 @@ public class ParserUK {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.thesun.co.uk/sport/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(header.text())) ? "Sport" : header.text();
 
-           results.add(new ResultUK(url, text));
+           results.add(new ResultUK(url, text,"SPORT_UK"));
         });
 
         return results;
