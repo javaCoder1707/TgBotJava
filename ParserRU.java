@@ -1,4 +1,4 @@
-package ru.parser;
+package com.parser.ru;
 
 
 import org.apache.http.util.TextUtils;
@@ -14,11 +14,41 @@ import java.util.List;
 
 public class ParserRU {
 
+    public static List<ResultRU> receiveNewsResultsByType(String type) throws IOException {
+        List<ResultRU> results = new ArrayList<>();
+        switch (type){
+            case "POLICY_RU":
+                results = receiveAllNewsResults();
+                break;
+
+            case "MOBILE_RU":
+                results = receiveMobileNewsResults();
+                break;
+
+            case "AUTO_RU":
+                results = receiveAutoNewsResults();
+                break;
+
+            case "SPORT_RU":
+                results = receiveSportNewsResults();
+                break;
+
+            case "ART_RU":
+                results = receiveArtNewsResults();
+                break;
+
+            default:
+                System.err.println("Invalid news type at  ParserRU.receiveNewsResultByType() call");
+        }
+
+        return results;
+    }
+
     public static List<ResultRU> receiveAllNewsResults() throws IOException{
         List<ResultRU> results = new ArrayList<>();
         results.addAll(receivePolicyNewsResults());
         results.addAll(receiveMobileNewsResults());
-        results.addAll(receiveCarsNewsResults());
+        results.addAll(receiveAutoNewsResults());
         results.addAll(receiveSportNewsResults().subList(0, 25));
         results.addAll(receiveArtNewsResults());
 
@@ -41,7 +71,7 @@ public class ParserRU {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/politics/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Политика" : aLink.text();
 
-            results.add(new ResultRU(url, text, "Policy"));
+            results.add(new ResultRU(url, text, "POLICY_RU"));
         });
 
         return results;
@@ -51,23 +81,23 @@ public class ParserRU {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
-        Document document = Jsoup.connect("https://ria.ru/technology/").get();
+        Document document = Jsoup.connect("https://www.ixbt.com/news/").get();
 
-        Elements divs = document.getElementsByClass("list-item__content");
+        Elements elements = document.getElementsByClass("item");
 
-        divs.forEach(div -> {
-            Element aLink = div.child(1);
+        elements.forEach(element -> {
+            Element aLink = (element.children().size() == 2) ? element.child(1) : element.child(2) ;
 
-            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/technology/" : aLink.attr("href");
+            String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.ixbt.com/news/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Технологии" : aLink.text();
 
-            results.add(new ResultRU(url, text, "Mobile"));
+            results.add(new ResultRU(url, text, "MOBILE_RU"));
         });
 
         return results;
     }
 
-    public static List<ResultRU> receiveCarsNewsResults() throws IOException {
+    public static List<ResultRU> receiveAutoNewsResults() throws IOException {
         List<ResultRU> results = new ArrayList<>();
 
         System.out.println("Parsing...");
@@ -81,7 +111,7 @@ public class ParserRU {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/auto/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Авто" : aLink.text();
 
-            results.add(new ResultRU(url, text, "Cars"));
+            results.add(new ResultRU(url, text, "AUTO_RU"));
         });
 
         return results;
@@ -99,7 +129,7 @@ public class ParserRU {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.sports.ru/news" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Спорт" : aLink.text();
 
-            results.add(new ResultRU(url, text, "Sport"));
+            results.add(new ResultRU(url, text, "SPORT_RU"));
         });
 
         return results;
@@ -109,9 +139,9 @@ public class ParserRU {
         List<ResultRU> results = new ArrayList<>();
         results.addAll(receiveFilmsNewsResults());
         results.addAll(receiveMusicNewsResults());
-        
+
         Collections.shuffle(results);
-        
+
         return results;
     }
 
@@ -129,7 +159,7 @@ public class ParserRU {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/category_kino/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Искусство" : aLink.text();
 
-            results.add(new ResultRU(url, text, "Art"));
+            results.add(new ResultRU(url, text, "ART_RU"));
         });
 
         return results;
@@ -149,7 +179,7 @@ public class ParserRU {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://ria.ru/category_muzyka/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(aLink.text())) ? "Искусство" : aLink.text();
 
-            results.add(new ResultRU(url, text, "Art"));
+            results.add(new ResultRU(url, text, "ART_RU"));
         });
 
         return results;
