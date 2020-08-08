@@ -18,7 +18,7 @@ public class ParserRU {
         List<ResultRU> results = new ArrayList<>();
         switch (type){
             case "POLICY_RU":
-                results = receiveAllNewsResults();
+                results = receivePolicyNewsResults();
                 break;
 
             case "MOBILE_RU":
