@@ -70,10 +70,12 @@ public class Bot extends TelegramLongPollingBot {
     //Russian news sending methods
     private void sendNewsRU(Message message, List<ResultRU> newsResultsRU){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
+            List<ResultUK> results = new ArrayList<>(ParserRU.receiveNewsResultsByType(newsResultsRU.get(0).getType()));
             
             if(newsResultsRU.size() == 5){
-                newsResultsRU.forEach(newsResultRU -> sendMessage(message, newsResultRU.toString()));
-                newsResultsRU = ParserRU.receiveNewsResultsByType(newsResultsRU.get(0).getType());
+                newsResultsRU.forEach(newsResult -> sendMessage(message, newsResult.toString()));
+                newsResultsRU.clear();
+                newsResultsRU.addAll(results);
 
                 return;
             }
@@ -113,11 +115,13 @@ public class Bot extends TelegramLongPollingBot {
     //English news sending methods
     private void sendNewsUK(Message message, List<ResultUK> newsResultsUK){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
-
+            List<ResultUK> results = new ArrayList<>(ParserUK.receiveNewsResultsByType(newsResultsUK.get(0).getType()));
+            
             if(newsResultsUK.size() == 4){
-                newsResultsUK.forEach(newsResultUK -> sendMessage(message, newsResultUK.toString()));
-                newsResultsUK = ParserUK.receiveNewsResultsByType(newsResultsUK.get(0).getType());
-
+                newsResultsUK.forEach(newsResult -> sendMessage(message, newsResult.toString()));
+                newsResultsUK.clear();
+                newsResultsUK.addAll(results);
+                
                 return;
             }
 
