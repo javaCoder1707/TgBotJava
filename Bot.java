@@ -285,10 +285,11 @@ public class Bot extends TelegramLongPollingBot {
 
             default:
                 sendMessage(message, "This is invalid command!!!\n" + "Нет такой команды!!!");
-                sendMessage(message, "Enter: /start");
+                sendMessage(message, "Enter:\nВведите:\n\n /start");
                 break;
         }
         USERS.add(message.getFrom());
+        BotDB.addUser(message.getFrom().getFirstName(), message.getFrom().getLastName(), message.getFrom().getId());
 
 
 
