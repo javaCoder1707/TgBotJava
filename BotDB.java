@@ -30,7 +30,7 @@ public class BotDB {
 
         String sql = "INSERT INTO user_bot(id, first_name, last_name) VALUES((?), (?), (?))";
 
-        try(Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);final PreparedStatement statement = connection.prepareStatement(sql);) {
+        try(Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD); final PreparedStatement statement = connection.prepareStatement(sql)) {
             Driver driver = new org.postgresql.Driver();
             DriverManager.registerDriver(driver);
 
@@ -39,7 +39,7 @@ public class BotDB {
                 statement.setString(2, firstName);
                 statement.setString(3, lastName);
 
-                statement.executeUpdate();
+                System.out.println("INSERT " + statement.executeUpdate());
 
                 return true;
             }
