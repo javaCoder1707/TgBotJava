@@ -28,7 +28,7 @@ public class BotDB {
 
     public static boolean addUser(String firstName, String lastName, int id){
 
-        String sql = "INSERT INTO user_bot VALUES((?), (?), (?))";
+        String sql = "INSERT INTO user_bot(id, first_name, last_name) VALUES((?), (?), (?))";
 
         try(Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);final PreparedStatement statement = connection.prepareStatement(sql);) {
             Driver driver = new org.postgresql.Driver();
