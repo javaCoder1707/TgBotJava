@@ -70,7 +70,7 @@ public class Bot extends TelegramLongPollingBot {
     //Russian news sending methods
     private void sendNewsRU(Message message, List<ResultRU> newsResultsRU){
         try(FileWriter writer = new FileWriter("C:\\Users\\Тигр\\Desktop\\dataBot.txt", true)){
-            List<ResultUK> results = new ArrayList<>(ParserRU.receiveNewsResultsByType(newsResultsRU.get(0).getType()));
+            List<ResultRU> results = new ArrayList<>(ParserRU.receiveNewsResultsByType(newsResultsRU.get(0).getType()));
             
             if(newsResultsRU.size() == 5){
                 newsResultsRU.forEach(newsResult -> sendMessage(message, newsResult.toString()));
