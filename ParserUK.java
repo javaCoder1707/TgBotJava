@@ -78,7 +78,7 @@ public class ParserUK {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.thesun.co.uk/news/uknews/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(header.text())) ? "News of UK" : header.text();
 
-            results.add(new ResultUK(url, text, "POLITIC_UK"));
+            results.add(new ResultUK(url, text, "NEWS_UK"));
         });
 
 
@@ -119,7 +119,7 @@ public class ParserUK {
             String url = (TextUtils.isEmpty(aLink.attr("href"))) ? "https://www.thesun.co.uk/news/politics/" : aLink.attr("href");
             String text = (TextUtils.isEmpty(header.text())) ? "Politic News" : header.text();
 
-            results.add(new ResultUK(url, text,"NEWS_UK"));
+            results.add(new ResultUK(url, text,"POLITIC_UK"));
         });
 
         return results;
