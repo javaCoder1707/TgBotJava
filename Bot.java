@@ -181,7 +181,7 @@ public class Bot extends TelegramLongPollingBot {
             case "Привет":
             case "привет":
                 sendMessage(message,
-                        "Привет\uD83D\uDC4B  чтобы узнать все новости на данный момент введите команду /newsAllR" +
+                        "Привет, " + message.getFrom().getFirstName() + "\uD83D\uDC4B  чтобы узнать все новости на данный момент введите команду /newsAllR" +
                                 "\n" + "\n" +
                                 "Чтобы узнать новости на тему политики \n \uD83C\uDFDB введите команду /policyR\n" +
                                 "\n" +
@@ -236,7 +236,7 @@ public class Bot extends TelegramLongPollingBot {
             case "Hi":
             case "hello":
                 sendMessage(message,
-                        "Hi\uD83D\uDC4B to get the all news, enter the command \n /newsAll" +
+                            "Hi, " + message.getFrom().getFirstName() + "\uD83D\uDC4B\nto get the all news, enter the command \n /newsAll" +
                                 "\n" + "\n" +
                                 "To get news on the topic of UK \uD83C\uDDEC\uD83C\uDDE7 enter the command /newsUK \n" +
                                 "\n" +
