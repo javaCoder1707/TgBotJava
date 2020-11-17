@@ -12,35 +12,35 @@ import java.util.List;
 
 public class ParserUK {
 
-    public static List<ResultUK> receiveNewsResultsByType(String type) throws IOException {
-        List<ResultUK> results = new ArrayList<>();
-        switch (type){
-            case "NEWS_UK":
-                results = receiveResultsNewsOfUK();
-                break;
+//     public static List<ResultUK> receiveNewsResultsByType(String type) throws IOException {
+//         List<ResultUK> results = new ArrayList<>();
+//         switch (type){
+//             case "NEWS_UK":
+//                 results = receiveResultsNewsOfUK();
+//                 break;
 
-            case "WORLD_UK":
-                results = receiveWorldNewsResults();
-                break;
+//             case "WORLD_UK":
+//                 results = receiveWorldNewsResults();
+//                 break;
 
-            case "POLITIC_UK":
-                results = receivePoliticNewsResults();
-                break;
+//             case "POLITIC_UK":
+//                 results = receivePoliticNewsResults();
+//                 break;
 
-            case "MOTORS_UK":
-                results = receiveMotorsNewsResults();
-                break;
+//             case "MOTORS_UK":
+//                 results = receiveMotorsNewsResults();
+//                 break;
 
-            case "SPORT_UK":
-                results = receiveSportNewsResults();
-                break;
+//             case "SPORT_UK":
+//                 results = receiveSportNewsResults();
+//                 break;
 
-            default:
-                System.err.println("Invalid news type at ParserUK.receiveNewsResultsByType() call ");
-        }
+//             default:
+//                 System.err.println("Invalid news type at ParserUK.receiveNewsResultsByType() call ");
+//         }
 
-        return results;
-    }
+//         return results;
+//     }
 
     public static List<ResultUK> receiveAllNewsResults() throws IOException {
         List<ResultUK> results = new ArrayList<>();
