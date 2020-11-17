@@ -14,35 +14,35 @@ import java.util.List;
 
 public class ParserRU {
 
-    public static List<ResultRU> receiveNewsResultsByType(String type) throws IOException {
-        List<ResultRU> results = new ArrayList<>();
-        switch (type){
-            case "POLICY_RU":
-                results = receivePolicyNewsResults();
-                break;
+//     public static List<ResultRU> receiveNewsResultsByType(String type) throws IOException {
+//         List<ResultRU> results = new ArrayList<>();
+//         switch (type){
+//             case "POLICY_RU":
+//                 results = receivePolicyNewsResults();
+//                 break;
 
-            case "MOBILE_RU":
-                results = receiveMobileNewsResults();
-                break;
+//             case "MOBILE_RU":
+//                 results = receiveMobileNewsResults();
+//                 break;
 
-            case "AUTO_RU":
-                results = receiveAutoNewsResults();
-                break;
+//             case "AUTO_RU":
+//                 results = receiveAutoNewsResults();
+//                 break;
 
-            case "SPORT_RU":
-                results = receiveSportNewsResults();
-                break;
+//             case "SPORT_RU":
+//                 results = receiveSportNewsResults();
+//                 break;
 
-            case "ART_RU":
-                results = receiveArtNewsResults();
-                break;
+//             case "ART_RU":
+//                 results = receiveArtNewsResults();
+//                 break;
 
-            default:
-                System.err.println("Invalid news type at  ParserRU.receiveNewsResultByType() call");
-        }
+//             default:
+//                 System.err.println("Invalid news type at  ParserRU.receiveNewsResultByType() call");
+//         }
 
-        return results;
-    }
+//         return results;
+//     }
 
     public static List<ResultRU> receiveAllNewsResults() throws IOException{
         List<ResultRU> results = new ArrayList<>();
