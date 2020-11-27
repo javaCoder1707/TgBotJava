@@ -45,12 +45,11 @@ public class ParserRU {
 //     }
 
     public static List<ResultRU> receiveAllNewsResults() throws IOException{
-        List<ResultRU> results = new ArrayList<>();
-        results.addAll(receivePolicyNewsResults());
-        results.addAll(receiveMobileNewsResults());
-        results.addAll(receiveAutoNewsResults());
-        results.addAll(receiveSportNewsResults().subList(0, 25));
-        results.addAll(receiveArtNewsResults());
+        results.addAll(receivePolicyNewsResults().subList(0,5));
+        results.addAll(receiveMobileNewsResults().subList(0,5));
+        results.addAll(receiveAutoNewsResults().subList(0,5));
+        results.addAll(receiveSportNewsResults().subList(0,5));
+        results.addAll(receiveArtNewsResults().subList(0,6));
 
         Collections.shuffle(results);
 
