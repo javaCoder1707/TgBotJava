@@ -1,1 +1,1 @@
-# JavaNewsUKBot1912
+# TgBotJava
